@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Metadata dasar untuk halaman web -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThermoConvert</title>
+    
+    <!-- Mengimpor Tailwind CSS via CDN (untuk development) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Konfigurasi custom untuk Tailwind CSS
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',  // Warna utama (biru)
+                        secondary: '#10B981', // Warna sekunder (hijau)
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <!-- Container utama untuk form konversi -->
+    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
+        <!-- Judul aplikasi -->
+        <h1 class="text-3xl font-bold text-center text-primary mb-6">ThermoConvert</h1>
+        
+        <!-- Form input untuk konversi suhu -->
+        <form id="converter-form" class="space-y-4">
+            <div class="flex space-x-2">
+                <!-- Input field untuk nilai suhu -->
+                <input 
+                    type="number" 
+                    id="temperature" 
+                    placeholder="Masukkan suhu" 
+                    step="0.01"  
+                    required    
+                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                >
+                <!-- Dropdown untuk memilih satuan suhu -->
+                <select 
+                    id="unit"
+                    class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                >
+                    <option value="celsius">°C</option>
+                    <option value="fahrenheit">°F</option>
+                    <option value="kelvin">K</option>
+                </select>
+            </div>
+            
+            <!-- Tombol submit -->
+            <button 
+                type="submit"
+                class="w-full bg-primary hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200"
+            >
+                Konversi
+            </button>
+        </form>
+
+        <!-- Container untuk menampilkan hasil konversi -->
+        <div id="results" class="mt-6 space-y-2">
+            <!-- Hasil konversi ke Celsius -->
+            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                <span class="font-medium">Celsius:</span>
+                <span id="celsius" class="font-semibold text-secondary">-</span>
+            </div>
+            <!-- Hasil konversi ke Fahrenheit -->
+            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                <span class="font-medium">Fahrenheit:</span>
+                <span id="fahrenheit" class="font-semibold text-secondary">-</span>
+            </div>
+            <!-- Hasil konversi ke Kelvin -->
+            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                <span class="font-medium">Kelvin:</span>
+                <span id="kelvin" class="font-semibold text-secondary">-</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script untuk menangani form submission -->
+    <script>
+        // Event listener untuk form submission
+        document.getElementById('converter-form').addEventListener('submit', async (e) => {
+            e.preventDefault(); // Mencegah reload halaman
+            
+            // Ambil nilai input
+            const value = parseFloat(document.getElementById('temperature').value);
+            const unit = document.getElementById('unit').value;
+            
+            try {
+                // Kirim request ke API
+                const response = await fetch(`/api/convert?value=${value}&from=${unit}`);
+                const data = await response.json();
+                
+                // Tampilkan hasil konversi dengan 2 angka desimal
+                document.getElementById('celsius').textContent = data.celsius.toFixed(2) + ' °C';
+                document.getElementById('fahrenheit').textContent = data.fahrenheit.toFixed(2) + ' °F';
+                document.getElementById('kelvin').textContent = data.kelvin.toFixed(2) + ' K';
+            } catch (error) {
+                // Tangani error jika terjadi
+                alert('Terjadi kesalahan saat konversi');
+            }
+        });
+    </script>
+</body>
+</html>
