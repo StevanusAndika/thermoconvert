@@ -7,6 +7,9 @@ Aplikasi konversi suhu berbasis web dengan API menggunakan Golang
 ## API Endpoint
 ![API Test](assets/API_TEST.png)
 
+## Laporan Proyek
+[Laporan UAS - Stevanus Andika Galih Setiawan](assets/LAPORAN_UAS_STEVANUS_ANDIKA_GALIH_SETIAWAN_202303110008_RK231.pdf)
+
 ## Fitur Utama
 - Konversi real-time antara Celsius, Fahrenheit, dan Kelvin
 - Antarmuka web responsif
