@@ -2,7 +2,10 @@
 
 Aplikasi konversi suhu berbasis web dengan API menggunakan Golang
 
-![Demo ThermoConvert](https://i.imgur.com/contoh-screenshot.png)
+![Demo ThermoConvert](assets/UI.png)
+
+## API Endpoint
+![API Test](assets/API_TEST.png)
 
 ## Fitur Utama
 - Konversi real-time antara Celsius, Fahrenheit, dan Kelvin
